@@ -1,0 +1,25 @@
+
+import pandas as pd
+from sklearn.impute import SimpleImputer
+
+data = pd.read_csv('Iris.csv')
+print("Original Dataset:")
+print(data.head())
+
+print("\nNull values in each column before imputation:")
+print(data.isnull().sum())
+
+imputer = SimpleImputer(strategy='mean')
+
+numeric_columns = data.select_dtypes(include=['float64', 'int64']).columns
+
+data[numeric_columns] = imputer.fit_transform(data[numeric_columns])
+
+print("\nNull values in each column after imputation:")
+print(data.isnull().sum())
+
+print("\nDataset after replacing null values with mean:")
+print(data.head())
+
+data.to_csv('Iris_cleaned.csv', index=False)
+print("\nCleaned dataset saved as 'Iris_cleaned.csv'.")
