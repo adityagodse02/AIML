@@ -1,0 +1,32 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+data = pd.read_csv('Iris.csv')
+
+
+print("Original Dataset:")
+print(data.head())
+
+x = data['SepalLengthCm']  # X-axis
+y = data['SepalWidthCm']    # Y-axis
+species = data['Species']    # Species for coloring
+
+
+plt.figure(figsize=(10, 6))
+scatter = plt.scatter(x, y, c=pd.factorize(species)[0], cmap='viridis', alpha=0.7)
+
+
+plt.colorbar(scatter, ticks=[0, 1, 2], label='Species')
+plt.clim(-0.5, 2.5)
+
+
+plt.title('Scatter Plot of Sepal Length vs Sepal Width')
+plt.xlabel('Sepal Length (cm)')
+plt.ylabel('Sepal Width (cm)')
+
+plt.legend(handles=scatter.legend_elements()[0], labels=data['Species'].unique())
+
+
+plt.grid()
+plt.show()
