@@ -1,0 +1,28 @@
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+
+data = pd.read_csv('Iris.csv')
+
+print("Original Dataset:")
+print(data.head())
+
+categorical_column = 'Species'
+
+label_encoder = LabelEncoder()
+data['Species_LabelEncoded'] = label_encoder.fit_transform(data[categorical_column])
+
+print("\nDataset after Label Encoding:")
+print(data.head())
+
+one_hot_encoder = OneHotEncoder(sparse=False)  
+one_hot_encoded = one_hot_encoder.fit_transform(data[[categorical_column]])
+
+one_hot_encoded_df = pd.DataFrame(one_hot_encoded, columns=one_hot_encoder.get_feature_names_out([categorical_column]))
+
+data = pd.concat([data, one_hot_encoded_df], axis=1)
+
+print("\nDataset after One-Hot Encoding:")
+print(data.head())
+
+data.to_csv('Iris_encoded.csv', index=False)
+print("\nEncoded dataset saved as 'Iris_encoded.csv'.")
