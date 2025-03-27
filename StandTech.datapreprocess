@@ -1,0 +1,15 @@
+from sklearn.model_selection import train_test_split
+data=pd.read_csv('Iris.csv')
+print("Original Data: ")
+print(data.head())
+X=data.drop(columns=['Species'])
+y=data['Species']
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.3,random_state=42)
+print("\nTraining Set Size(X_train): ",X_train.shape)
+print("Test Set Size(X_test): ",X_test.shape)
+print("\nTraining Labels Size(y_train): ",y_train.shape)
+print("Test Labels Size(y_test): ",y_test.shape)
+print("\n Training Set (X_train): ");
+print(X_train.head())
+print("\n Test Set (X_test): ");
+print(X_test.head())
