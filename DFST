@@ -1,0 +1,40 @@
+class Graph:
+    def __init__(self):
+        self.graph = {}  
+
+    def add_edge(self, u, v):
+        """Add an edge to the graph (undirected)"""
+        if u not in self.graph:
+            self.graph[u] = []
+        if v not in self.graph:
+            self.graph[v] = []
+        self.graph[u].append(v)
+        self.graph[v].append(u)
+
+    def dfs(self, start, visited=None):
+        """Perform DFS traversal starting from the given node"""
+        if visited is None:
+            visited = set()  
+
+        visited.add(start)  
+        dfs_order = [start]  
+
+       
+        for neighbor in self.graph.get(start, []):
+            if neighbor not in visited:
+                dfs_order.extend(self.dfs(neighbor, visited))  
+
+        return dfs_order
+
+# Example usage
+g = Graph()
+g.add_edge(0, 1)
+g.add_edge(0, 2)
+g.add_edge(1, 3)
+g.add_edge(1, 4)
+g.add_edge(2, 5)
+g.add_edge(2, 6)
+
+
+dfs_result = g.dfs(0)
+dfs_result
